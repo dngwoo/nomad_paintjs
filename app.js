@@ -1,4 +1,5 @@
 const canvas = document.querySelector("#jsCanvas");
+const colors = document.querySelectorAll("#jsColor");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 600;
@@ -50,3 +51,13 @@ if (canvas) {
     mousedown이 일어났을 경우 painting을 true로 변환되고 계속 유지된다.
     하지만 mouesup 이벤트를 이용하여 마우스 클릭이 떼어질 경우 painting은 다시 false가 된다.
 */
+
+const handleColorClick = (event) => {
+  const color = event.target.style.backgroundColor;
+  ctx.strokeStyle = color;
+};
+
+// Array.from을 해주는 이유는 일반 array로 변환 시켜주기 위해서이다.
+Array.from(colors).forEach((color) =>
+  color.addEventListener("click", handleColorClick)
+);
