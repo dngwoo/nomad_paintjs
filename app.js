@@ -1,5 +1,8 @@
+"use strict";
+
 const canvas = document.querySelector("#jsCanvas");
 const colors = document.querySelectorAll("#jsColor");
+const range = document.querySelector("#jsRange");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 600;
@@ -57,7 +60,17 @@ const handleColorClick = (event) => {
   ctx.strokeStyle = color;
 };
 
-// Array.from을 해주는 이유는 일반 array로 변환 시켜주기 위해서이다.
-Array.from(colors).forEach((color) =>
-  color.addEventListener("click", handleColorClick)
-);
+if (colors) {
+  // Array.from을 해주는 이유는 일반 array로 변환 시켜주기 위해서이다.
+  Array.from(colors).forEach((color) =>
+    color.addEventListener("click", handleColorClick)
+  );
+}
+
+const hadnleRangeChange = (event) => {
+  ctx.lineWidth = event.target.value;
+};
+
+if (range) {
+  range.addEventListener("input", hadnleRangeChange);
+}
