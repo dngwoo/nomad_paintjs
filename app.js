@@ -6,6 +6,7 @@
   const range = document.querySelector("#jsRange");
   const mode = document.querySelector("#jsMode");
   const ctx = canvas.getContext("2d");
+  const saveBtn = document.querySelector("#jsSave");
 
   const INITIAL_COLOR = "#2c2c2c";
   const CANVAS_SIZE = 600;
@@ -14,6 +15,8 @@
   canvas.height = CANVAS_SIZE;
 
   // canvas는 위에서 아래로 실행되기 때문에 fillStyle을 하나 더 지정해줘도 앞의 fillRect에는 영향을 미치지 않는다.
+  ctx.fillStyle = "white"; // save 시에 처음 색이 없으면 배경색이 없음. 그래서 지정해줘야 함.
+  ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
   ctx.strokeStyle = INITIAL_COLOR; // 선 색깔 지정
   ctx.fillStyle = INITIAL_COLOR;
   ctx.lineWidth = 2.5; // 2.5px을 의미
@@ -48,12 +51,18 @@
     }
   };
 
+  const handleCM = (event) => {
+    event.preventDefault();
+  };
+
   if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
     canvas.addEventListener("click", handleCanvasClick);
+    // 우클릭 방지(save 못하게 하기 위해서)
+    canvas.addEventListener("contextmenu", handleCM);
   }
 
   // 정리
@@ -105,5 +114,21 @@
 
   if (mode) {
     mode.addEventListener("click", handleModeClick);
+  }
+
+  const handleSaveClick = () => {
+    // .toDataURL은 이미지형식과 함께 data URL을 반환한다. default는 png임
+    // const image = canvas.toDataURL("image/jpeg");
+    const image = canvas.toDataURL();
+    // abchor(앵컬) 태그 생성 및 클릭해서 다운로드 하는 용도임.
+    // download 속성 사용!
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "PaintJS[🖼]";
+    link.click();
+  };
+
+  if (saveBtn) {
+    saveBtn.addEventListener("click", handleSaveClick);
   }
 })();
