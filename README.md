@@ -17,14 +17,14 @@ canvas.addEventListener("click", handleCanvasClic);
 canvas.addEventListener("contextmenu", handleCM);
 ```
 
-mousemove : 마우스가 움직일 때
-mousedown : 마우스를 클릭했을 경우
-mouseup : 마우스 클릭을 풀었을 경우
-mouseleave : 마우스가 영역을 벗어날 경우
-click : 클릭했을 경우
-contextmenu : 우클릭 방지를 위하여 사용
+- mousemove : 마우스가 움직일 때
+- mousedown : 마우스를 클릭했을 경우 (딱 한번 발생)
+- mouseup : 마우스 클릭을 풀었을 경우
+- mouseleave : 마우스가 영역을 벗어날 경우
+- click : 클릭했을 경우
+- contextmenu : 우클릭 방지를 위하여 사용
 
 # 보완 해야 될 것
 
-- [] gradient 사용해보기
-- [] gulp 부분 좀 더 세분화 시키기
+- [ ] gradient 사용해보기
+- [ ] gulp 부분 좀 더 세분화 시키기
