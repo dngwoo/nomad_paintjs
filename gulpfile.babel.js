@@ -1,12 +1,13 @@
 import gulp from "gulp";
-import csso from "gulp-csso";
+import del from "del";
+import htmlmin from "gulp-htmlmin";
 import browserify from "gulp-bro";
 import babelify from "babelify";
-import htmlmin from "gulp-htmlmin";
-import del from "del";
-import autoprefixer from "gulp-autoprefixer";
 import cssimport from "gulp-cssimport";
+import autoprefixer from "gulp-autoprefixer";
+import csso from "gulp-csso";
 import ghPages from "gulp-gh-pages";
+import ws from "gulp-webserver";
 
 const routes = {
   html: {
@@ -65,6 +66,14 @@ const watch = () => {
   gulp.watch(routes.css.watch);
 };
 
+const webserver = () =>
+  gulp.src("build").pipe(ws({ livereload: true, open: true }));
+
 const ghDeploy = () => gulp.src("build/**/*").pipe(ghPages());
 
-export const deploy = gulp.series([clean, html, css, js, ghDeploy, clean]);
+const assets = gulp.series([clean, html, css, js]);
+const live = gulp.series([webserver, watch]);
+
+export const build = gulp.series([assets]);
+export const dev = gulp.series([assets, live]);
+export const deploy = gulp.series([assets, ghDeploy, clean]);
